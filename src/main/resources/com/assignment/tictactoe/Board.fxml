@@ -1,0 +1,6 @@
+<?import javafx.scene.layout.GridPane?>
+<GridPane fx:id="boardGrid" hgap="10" vgap="10"
+          fx:controller="com.assignment.tictactoe.controller.BoardController"
+          xmlns:fx="http://javafx.com/fxml">
+</GridPane>
+

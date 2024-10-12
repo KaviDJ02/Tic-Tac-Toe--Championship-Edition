@@ -1,4 +1,5 @@
 package com.assignment.tictactoe.service;
 
-public class Piece {
+public enum Piece {
+    X, O, EMPTY
 }
