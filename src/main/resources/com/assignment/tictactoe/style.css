@@ -1,0 +1,62 @@
+.root {
+    -fx-background-color: #1e1e1e;  /* Darker background */
+}
+
+.board-grid {
+    -fx-padding: 20;
+    -fx-background-color: #2d2d2d;  /* Softer grid background */
+    -fx-border-color: #444;
+    -fx-border-width: 2;
+    -fx-border-radius: 8;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.7), 10, 0, 0, 4);  /* Shadow for grid */
+}
+
+.tic-tac-toe-button {
+    -fx-font-size: 26;
+    -fx-background-color: #393939;
+    -fx-text-fill: #f2f2f2;
+    -fx-border-color: #777;
+    -fx-border-radius: 8;
+    -fx-padding: 12;
+    -fx-pref-width: 80;
+    -fx-pref-height: 80;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.6), 10, 0, 0, 4);  /* 3D button effect */
+}
+
+.tic-tac-toe-button:hover {
+    -fx-background-color: #4d4d4d;  /* Hover effect for buttons */
+    -fx-cursor: hand;  /* Change cursor on hover */
+}
+
+.control-button {
+    -fx-font-size: 18;
+    -fx-background-color: #ff5e5e;
+    -fx-text-fill: #f2f2f2;
+    -fx-border-color: #ff8a8a;
+    -fx-border-radius: 10;
+    -fx-padding: 10 30;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.6), 12, 0, 0, 4);
+}
+
+.control-button:hover {
+    -fx-background-color: #ff8a8a;
+    -fx-cursor: hand;
+}
+
+.game-title {
+    -fx-font-family: "Arial Black";
+    -fx-font-size: 28;
+    -fx-text-fill: #f2f2f2;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.7), 8, 0, 0, 2);
+}
+
+.sub-title {
+    -fx-font-size: 16;
+    -fx-text-fill: #c9c9c9;
+}
+
+.message-label {
+    -fx-font-size: 14;
+    -fx-text-fill: #f2ea07;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.7), 8, 0, 0, 2);
+}

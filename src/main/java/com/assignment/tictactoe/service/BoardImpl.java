@@ -1,38 +1,70 @@
-// BoardImpl.java
 package com.assignment.tictactoe.service;
 
 public class BoardImpl implements Board {
-    private Piece[][] board;
+    private Piece[][] pieces; // 2D array to represent the board
 
     public BoardImpl() {
-        initializeBoard();
+        initializeBoard(); // Initialize the board when an instance is created
     }
 
     @Override
     public void initializeBoard() {
-        board = new Piece[3][3];
-        // Later: Initialize each cell as Piece.EMPTY
+        pieces = new Piece[3][3]; // Create a 3x3 board
+        // Set all cells to EMPTY
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                pieces[i][j] = Piece.EMPTY;
+            }
+        }
     }
 
     @Override
     public boolean isLegalMove(int row, int col) {
-        // Later: Add logic to check if the move is valid
-        return false;
+        // A move is legal if the cell is EMPTY
+        return pieces[row][col] == Piece.EMPTY;
     }
 
     @Override
     public void updateMove(int row, int col, Piece piece) {
-        // Later: Add logic to update the board with the current move
+        // Update the cell with the given piece if the move is legal
+        if (isLegalMove(row, col)) {
+            pieces[row][col] = piece;
+        }
     }
 
     @Override
     public Piece checkWinner() {
-        // Later: Add logic to check if there's a winner
+        // Check rows for a winner
+        for (int i = 0; i < 3; i++) {
+            if (pieces[i][0] == pieces[i][1] && pieces[i][1] == pieces[i][2] && pieces[i][0] != Piece.EMPTY) {
+                return pieces[i][0];
+            }
+        }
+        // Check columns for a winner
+        for (int i = 0; i < 3; i++) {
+            if (pieces[0][i] == pieces[1][i] && pieces[1][i] == pieces[2][i] && pieces[0][i] != Piece.EMPTY) {
+                return pieces[0][i];
+            }
+        }
+        // Check diagonals for a winner
+        if (pieces[0][0] == pieces[1][1] && pieces[1][1] == pieces[2][2] && pieces[0][0] != Piece.EMPTY) {
+            return pieces[0][0];
+        }
+        if (pieces[0][2] == pieces[1][1] && pieces[1][1] == pieces[2][0] && pieces[0][2] != Piece.EMPTY) {
+            return pieces[0][2];
+        }
+        // No winner found, return EMPTY
         return Piece.EMPTY;
     }
 
     @Override
     public void printBoard() {
-        // Later: Add logic to print the current board state
+        // Print the current state of the board
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                System.out.print(pieces[i][j] + " ");
+            }
+            System.out.println();
+        }
     }
 }
