@@ -1,8 +1,8 @@
 package com.assignment.tictactoe.service;
 
 public class Winner {
-    Piece winningPiece;
-    int col1, col2, col3, row1, row2, row3;
+    public Piece winningPiece;
+    public int col1, col2, col3, row1, row2, row3;
 
     public Winner(Piece winningPiece) {
         this.winningPiece = winningPiece;

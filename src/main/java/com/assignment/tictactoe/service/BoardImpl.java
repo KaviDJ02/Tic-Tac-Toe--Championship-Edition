@@ -1,10 +1,15 @@
 package com.assignment.tictactoe.service;
 
-public class BoardImpl implements Board {
+public class BoardImpl implements Board{
     private Piece[][] pieces; // 2D array to represent the board
 
     public BoardImpl() {
         initializeBoard(); // Initialize the board when an instance is created
+    }
+
+    @Override
+    public void getBoardUI() {
+
     }
 
     @Override
@@ -29,6 +34,7 @@ public class BoardImpl implements Board {
         // Update the cell with the given piece if the move is legal
         if (isLegalMove(row, col)) {
             pieces[row][col] = piece;
+            printBoard();
         }
     }
 

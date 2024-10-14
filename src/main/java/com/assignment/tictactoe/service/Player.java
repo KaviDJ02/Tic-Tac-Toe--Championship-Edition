@@ -1,17 +1,16 @@
 package com.assignment.tictactoe.service;
 
 public abstract class Player {
-    protected Piece piece; // The piece (X or O) that the player will use
+    private BoardImpl board;
 
-    public Player(Piece piece) {
-        this.piece = piece; // Initialize the player's piece
+    Player(BoardImpl board) {
+        this.board = board;
     }
 
-    public Piece getPiece() {
-        return piece;
+    // Protected method to expose the board to subclasses like AiPlayer
+    protected BoardImpl getBoard() {
+        return board;
     }
 
-    // Abstract method to make a move on the board
-    // This method must be implemented by subclasses (e.g., HumanPlayer, AiPlayer)
-    public abstract int[] makeMove(Board board);
+    public abstract void move(int row, int col);
 }

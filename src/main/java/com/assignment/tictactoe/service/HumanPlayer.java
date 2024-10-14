@@ -1,14 +1,21 @@
 package com.assignment.tictactoe.service;
 
 public class HumanPlayer extends Player {
-    public HumanPlayer(Piece piece) {
-        super(piece); // Call the superclass constructor to set the piece (X or O) for the human player
+    private Piece piece;  // The piece the human player is using (X or O)
+
+    // Constructor that accepts the player's piece (X or O)
+    public HumanPlayer(BoardImpl board, Piece piece) {
+        super(board);  // Call the superclass constructor to initialize the board
+        this.piece = piece;  // Store the player's piece (X or O)
     }
 
     @Override
-    public int[] makeMove(Board board) {
-        // Add logic to capture the human player's move, possibly via button click on the UI
-        // For now, we will return a dummy move (row 0, column 0)
-        return new int[]{0, 0};
+    public void move(int row, int col) {
+        // Access the board through the getBoard() method from the Player class
+        if (getBoard().isLegalMove(row, col)) {
+            getBoard().updateMove(row, col, piece);  // Use the player's piece (X or O)
+        } else {
+            System.out.println("Invalid move. Try again.");
+        }
     }
 }

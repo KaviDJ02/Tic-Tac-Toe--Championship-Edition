@@ -1,7 +1,7 @@
 package com.assignment.tictactoe.service;
 
 public interface Board {
-    //void getBoardUI();
+    void getBoardUI();
     // Initialize the game board to its starting state
     void initializeBoard();
 
