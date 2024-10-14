@@ -14,7 +14,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/com/assignment/tictactoe/Board.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/com/assignment/tictactoe/Board-view.fxml"));
         primaryStage.setTitle("Tic-Tac-Toe: Championship Edition");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();

@@ -1,5 +1,7 @@
 package com.assignment.tictactoe.service;
 
+import java.util.Arrays;
+
 public class AiPlayer extends Player {
     public AiPlayer(Piece piece) {
         super(piece); // Call the superclass constructor to set the piece (X or O) for the AI player
@@ -9,6 +11,7 @@ public class AiPlayer extends Player {
     public int[] makeMove(Board board) {
         // Use the minimax algorithm to determine the best move for the AI player
         int[] bestMove = minimax(board, piece, true);
+        System.out.println(Arrays.toString(bestMove));
         // Return the row and column of the best move
         return new int[]{bestMove[1], bestMove[2]};
     }
