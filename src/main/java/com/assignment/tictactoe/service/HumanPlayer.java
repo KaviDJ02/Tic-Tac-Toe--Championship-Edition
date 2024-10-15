@@ -12,10 +12,10 @@ public class HumanPlayer extends Player {
     @Override
     public void move(int row, int col) {
         // Access the board through the getBoard() method from the Player class
-        if (getBoard().isLegalMove(row, col)) {
-            getBoard().updateMove(row, col, piece);  // Use the player's piece (X or O)
-        } else {
-            System.out.println("Invalid move. Try again.");
-        }
+
+    }
+
+    public Piece getPiece() {
+        return piece;
     }
 }

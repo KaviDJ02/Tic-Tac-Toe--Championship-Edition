@@ -1,7 +1,7 @@
 package com.assignment.tictactoe.service;
 
 public interface Board {
-    void getBoardUI();
+    BoardUi getBoardUI();
     // Initialize the game board to its starting state
     void initializeBoard();
 
@@ -12,7 +12,7 @@ public interface Board {
     void updateMove(int row, int col, Piece piece);
 
     // Check if there is a winner on the board
-    Piece checkWinner();
+    Winner checkWinner();
 
     // Print the current state of the board (for debugging purposes)
     void printBoard();

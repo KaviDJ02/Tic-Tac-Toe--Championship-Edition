@@ -2,87 +2,96 @@ package com.assignment.tictactoe.service;
 
 public class AiPlayer extends Player {
     private Piece piece;  // AI's piece (X or O)
+    private Piece opponentPiece;  // Opponent's piece
+    private BoardImpl board;  // The game board
 
     // Constructor to initialize the AiPlayer with a board and piece
     public AiPlayer(BoardImpl board, Piece piece) {
         super(board); // Pass the board to the Player constructor
+        this.board = board;
         this.piece = piece; // Store the AI's piece (X or O)
+        this.opponentPiece = (piece == Piece.X) ? Piece.O : Piece.X; // Determine the opponent's piece
     }
 
     @Override
     public void move(int row, int col) {
         // Use minimax to determine the best move for the AI
-        int[] bestMove = minimax(getBoard(), piece, true);  // Call minimax with the board and AI's piece
-        int bestRow = bestMove[1];
-        int bestCol = bestMove[2];
+        int[] bestMove = getBestMove();  // Call getBestMove to find the best move
+        int bestRow = bestMove[0];
+        int bestCol = bestMove[1];
 
         // Perform the move on the board if it's valid
-        if (bestRow != -1 && bestCol != -1 && getBoard().isLegalMove(bestRow, bestCol)) {
-            getBoard().updateMove(bestRow, bestCol, piece);  // Update the board with AI's move
-            System.out.println("AI move: [" + bestRow + ", " + bestCol + "]");
-            //updateCell(bestRow, bestCol, piece.toString()); // Update the UI for AI move
+        if (bestRow != -1 && bestCol != -1 && board.isLegalMove(bestRow, bestCol)) {
+            board.updateMove(bestRow, bestCol, piece);
         }
     }
 
+    // Method to find the best move for the AI using the minimax algorithm
+    public int[] getBestMove() {
+        int bestVal = Integer.MIN_VALUE;
+        int[] bestMove = {-1, -1};
 
-
-
-    // Minimax algorithm to calculate the best move for the AI
-    private int[] minimax(BoardImpl board, Piece currentPiece, boolean isMaximizing) {
-        // Check if there is a winner
-        Piece winner = board.checkWinner();
-        if (winner == Piece.X) return new int[]{-1, -1, -1}; // X wins, return score -1 and dummy row/col
-        if (winner == Piece.O) return new int[]{1, -1, -1};  // O wins, return score 1 and dummy row/col
-        if (isBoardFull(board)) return new int[]{0, -1, -1}; // Draw, return score 0 and dummy row/col
-
-        // Initialize the best score and move
-        int bestScore = isMaximizing ? Integer.MIN_VALUE : Integer.MAX_VALUE;
-        int[] bestMove = {-1, -1};  // Store row and col of the best move
-
-        // Iterate through all cells on the board
+        // Traverse all cells, evaluate minimax function for all empty cells
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                // Check if the cell is empty
+                // Check if cell is empty
                 if (board.isLegalMove(i, j)) {
                     // Make the move
-                    board.updateMove(i, j, currentPiece);
+                    board.updateMove(i, j, piece);
 
-                    // Recursively call minimax to evaluate the move
-                    int score = minimax(board, currentPiece == Piece.X ? Piece.O : Piece.X, !isMaximizing)[0];
+                    // Compute evaluation function for this move
+                    int moveVal = minimax(board, 0, false);
 
                     // Undo the move
                     board.updateMove(i, j, Piece.EMPTY);
 
-                    // Update the best score and move based on whether we are maximizing or minimizing
-                    if (isMaximizing) {
-                        if (score > bestScore) {
-                            bestScore = score;
-                            bestMove = new int[]{i, j};  // Store the row and column of the best move
-                        }
-                    } else {
-                        if (score < bestScore) {
-                            bestScore = score;
-                            bestMove = new int[]{i, j};  // Store the row and column of the best move
-                        }
+                    // If the value of the current move is more than the best value, update best
+                    if (moveVal > bestVal) {
+                        bestMove[0] = i;
+                        bestMove[1] = j;
+                        bestVal = moveVal;
                     }
                 }
             }
         }
-
-        // Return the best score along with the best move found
-        return new int[]{bestScore, bestMove[0], bestMove[1]};
+        return bestMove;
     }
 
+    // Minimax algorithm to calculate the best move for the AI
+    private int minimax(BoardImpl board, int depth, boolean isMaximizing) {
+        Winner winner = board.checkWinner();
+        if (winner.winningPiece == piece) return 10 - depth;
+        if (winner.winningPiece == opponentPiece) return depth - 10;
+        if (board.isBoardFull()) return 0;
 
-    // Method to check if the board is full (no more legal moves)
-    private boolean isBoardFull(BoardImpl board) {
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                if (board.isLegalMove(i, j)) {
-                    return false; // Found an empty cell, board is not full
+        if (isMaximizing) {
+            int best = Integer.MIN_VALUE;
+            for (int i = 0; i < 3; i++) {
+                for (int j = 0; j < 3; j++) {
+                    if (board.isLegalMove(i, j)) {
+                        board.updateMove(i, j, piece);
+                        best = Math.max(best, minimax(board, depth + 1, false));
+                        board.updateMove(i, j, Piece.EMPTY);
+                    }
                 }
             }
+            return best;
+        } else {
+            int best = Integer.MAX_VALUE;
+            for (int i = 0; i < 3; i++) {
+                for (int j = 0; j < 3; j++) {
+                    if (board.isLegalMove(i, j)) {
+                        board.updateMove(i, j, opponentPiece);
+                        best = Math.min(best, minimax(board, depth + 1, true));
+                        board.updateMove(i, j, Piece.EMPTY);
+                    }
+                }
+            }
+            return best;
         }
-        return true; // No empty cells found, board is full
+    }
+
+    public Piece getPiece() {
+        return piece;
     }
 }

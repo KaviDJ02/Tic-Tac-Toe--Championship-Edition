@@ -1,15 +1,17 @@
 package com.assignment.tictactoe.service;
 
 public class BoardImpl implements Board{
-    private Piece[][] pieces; // 2D array to represent the board
+    public Piece[][] pieces; // 2D array to represent the board
+    public BoardUi boardUi; // Reference to the board UI
+
 
     public BoardImpl() {
         initializeBoard(); // Initialize the board when an instance is created
     }
 
     @Override
-    public void getBoardUI() {
-
+    public BoardUi getBoardUI() {
+        return boardUi;
     }
 
     @Override
@@ -34,33 +36,39 @@ public class BoardImpl implements Board{
         // Update the cell with the given piece if the move is legal
         if (isLegalMove(row, col)) {
             pieces[row][col] = piece;
-            printBoard();
         }
+
+        //pieces[row][col] = piece;
+
+
     }
 
     @Override
-    public Piece checkWinner() {
+    public Winner checkWinner() {
         // Check rows for a winner
-        for (int i = 0; i < 3; i++) {
-            if (pieces[i][0] == pieces[i][1] && pieces[i][1] == pieces[i][2] && pieces[i][0] != Piece.EMPTY) {
-                return pieces[i][0];
+        for (int row = 0; row < 3; row++) {
+            if (pieces[row][0] != Piece.EMPTY && pieces[row][0] == pieces[row][1] && pieces[row][1] == pieces[row][2]) {
+                return new Winner(pieces[row][0], 0, 1, 2, row, row, row);
             }
         }
+
         // Check columns for a winner
-        for (int i = 0; i < 3; i++) {
-            if (pieces[0][i] == pieces[1][i] && pieces[1][i] == pieces[2][i] && pieces[0][i] != Piece.EMPTY) {
-                return pieces[0][i];
+        for (int col = 0; col < 3; col++) {
+            if (pieces[0][col] != Piece.EMPTY && pieces[0][col] == pieces[1][col] && pieces[1][col] == pieces[2][col]) {
+                return new Winner(pieces[0][col], col, col, col, 0, 1, 2);
             }
         }
+
         // Check diagonals for a winner
-        if (pieces[0][0] == pieces[1][1] && pieces[1][1] == pieces[2][2] && pieces[0][0] != Piece.EMPTY) {
-            return pieces[0][0];
+        if (pieces[0][0] != Piece.EMPTY && pieces[0][0] == pieces[1][1] && pieces[1][1] == pieces[2][2]) {
+            return new Winner(pieces[0][0], 0, 1, 2, 0, 1, 2);
         }
-        if (pieces[0][2] == pieces[1][1] && pieces[1][1] == pieces[2][0] && pieces[0][2] != Piece.EMPTY) {
-            return pieces[0][2];
+        if (pieces[0][2] != Piece.EMPTY && pieces[0][2] == pieces[1][1] && pieces[1][1] == pieces[2][0]) {
+            return new Winner(pieces[0][2], 2, 1, 0, 0, 1, 2);
         }
-        // No winner found, return EMPTY
-        return Piece.EMPTY;
+
+        // No winner found
+        return new Winner(Piece.EMPTY);
     }
 
     @Override
@@ -72,5 +80,16 @@ public class BoardImpl implements Board{
             }
             System.out.println();
         }
+    }
+
+    public boolean isBoardFull() {
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (isLegalMove(i, j)) {
+                    return false; // Found an empty cell, board is not full
+                }
+            }
+        }
+        return true; // No empty cells found, board is full
     }
 }
