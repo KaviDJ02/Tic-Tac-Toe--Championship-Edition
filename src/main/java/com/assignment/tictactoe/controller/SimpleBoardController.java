@@ -3,12 +3,7 @@ package com.assignment.tictactoe.controller;
 import com.assignment.tictactoe.service.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Label;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.control.*;
 
 import java.util.Optional;
 
@@ -18,10 +13,10 @@ public class SimpleBoardController implements BoardUi {
     private Button cell1, cell2, cell3, cell4, cell5, cell6, cell7, cell8, cell9;
 
     @FXML
-    private AnchorPane gamePane, welcomePane;
+    private Label msgLabel, roundLabel, oScore, xScore;
 
     @FXML
-    private Label msgLabel, roundLabel, oScore, xScore;
+    private Button nextRoundButton;
 
     private BoardImpl board = new BoardImpl();
     private HumanPlayer humanPlayer = new HumanPlayer(board, Piece.X);
@@ -40,9 +35,8 @@ public class SimpleBoardController implements BoardUi {
         };
 
         board.initializeBoard();
-
+        nextRoundButton.setDisable(true); // Disable the next round button at the start
     }
-
 
     @FXML
     void nextButtonOnAction(ActionEvent event) {
@@ -51,6 +45,7 @@ public class SimpleBoardController implements BoardUi {
         roundCalculate();
         isPlayerTurn = true;
         msgLabel.setText("New Round");
+        nextRoundButton.setDisable(true); // Disable the next round button after it has been clicked
 
         System.out.println("Next Round button clicked");
     }
@@ -61,6 +56,11 @@ public class SimpleBoardController implements BoardUi {
         alert.setTitle("Confirm Reset");
         alert.setHeaderText(null);
         alert.setContentText("Are you sure you want to reset the board?");
+
+        // Load the stylesheet and apply it to the alert
+        DialogPane dialogPane = alert.getDialogPane();
+        dialogPane.getStylesheets().add(getClass().getResource("/com/assignment/tictactoe/SimpleStyle.css").toExternalForm());
+        dialogPane.getStyleClass().add("alert");  // Make sure to match this class in the CSS
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
@@ -111,6 +111,8 @@ public class SimpleBoardController implements BoardUi {
                     winner.col1+" "+winner.col2+" "+winner.col3+"\n"+
                     winner.row1+" "+winner.row2+" "+winner.row3);
             disableAllCells();
+            nextRoundButton.setDisable(false); // Enable the next round button when the game is finished
+
         }
     }
 
@@ -148,6 +150,8 @@ public class SimpleBoardController implements BoardUi {
             System.out.println("The game is a draw.");
             msgLabel.setText("The game is a draw.");
             isPlayerTurn = true;
+            nextRoundButton.setDisable(false); // Enable the next round button when the game is finished
+
         }
 
         scoreCalaculate();

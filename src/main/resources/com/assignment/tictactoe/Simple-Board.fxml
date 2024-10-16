@@ -12,7 +12,7 @@
     <children>
 
         <!-- Game Pane -->
-        <AnchorPane fx:id="gamePane" prefHeight="600.0" prefWidth="450.0" styleClass="game-pane">
+        <AnchorPane prefHeight="600.0" prefWidth="450.0" styleClass="game-pane">
             <children>
                 <Label alignment="CENTER" contentDisplay="CENTER" layoutX="107.0" layoutY="14.0" prefHeight="32.0" prefWidth="234.0" styleClass="score-title" text="Tic Tac Toe" />
                 <GridPane gridLinesVisible="true" layoutX="62.0" layoutY="252.0" prefHeight="314.0" prefWidth="314.0" styleClass="game-board">

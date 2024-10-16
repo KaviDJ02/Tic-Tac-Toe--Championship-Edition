@@ -107,3 +107,37 @@
 .button-next-round:pressed {
     -fx-background-color: #2e7d32; /* Darker green when clicked */
 }
+
+/* Custom styles for the Alert dialog */
+
+.alert {
+    -fx-font-family: 'Segoe UI', sans-serif;
+    -fx-background-color: #424242; /* Dark background for the alert */
+    -fx-text-fill: white; /* White text for contrast */
+}
+
+.alert .dialog-pane {
+    -fx-background-color: #333333; /* Darker background for the dialog pane */
+    -fx-border-color: #616161; /* Subtle border for the alert */
+    -fx-border-width: 2;
+}
+
+.alert .label {
+    -fx-font-size: 16px; /* Font size for alert text */
+    -fx-text-fill: #ffffff; /* White text */
+}
+
+.alert .button {
+    -fx-background-color: #388e3c; /* Green background for buttons */
+    -fx-text-fill: white;
+    -fx-border-radius: 8;
+}
+
+.alert .button:hover {
+    -fx-background-color: #43a047; /* Lighter green on hover */
+}
+
+.alert .button:pressed {
+    -fx-background-color: #2e7d32; /* Darker green when clicked */
+}
+
