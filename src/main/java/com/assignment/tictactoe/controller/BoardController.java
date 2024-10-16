@@ -3,10 +3,15 @@ package com.assignment.tictactoe.controller;
 import com.assignment.tictactoe.service.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+
+import java.util.Optional;
+import java.util.Random;
 
 public class BoardController implements BoardUi {
 
@@ -62,32 +67,28 @@ public class BoardController implements BoardUi {
         gamePane.setVisible(true);
 
         board.initializeBoard();
+
         board.printBoard();
     }
 
     @FXML
     void backButtonOnAction(ActionEvent event) {
         // Handle back button action
+        welcomePane.setVisible(true);
+        gamePane.setVisible(false);
+        resetBoardUI();
         System.out.println("Back button clicked");
 
     }
 
     @FXML
     void nextButtonOnAction(ActionEvent event) {
-//        if (winner != null) {
-//            if (winner.winningPiece == Piece.X) {
-//                xScore.setText(String.valueOf(Integer.parseInt(xScore.getText()) + 1));
-//            } else if (winner.winningPiece == Piece.O) {
-//                oScore.setText(String.valueOf(Integer.parseInt(oScore.getText()) + 1));
-//            }
-//        }
-//
-//        assert winner != null;
-//        System.out.println("Winner : "+winner.winningPiece.toString());
-//
-//        board.initializeBoard();
-//        resetBoardUI();
-//        winner = null; // Reset the winner for the next round
+        board.initializeBoard();
+        resetBoardUI();
+        roundCalculate();
+        isPlayerTurn = true;
+        msgLabel.setText("New Round");
+
 
         System.out.println("Next Round button clicked");
 
@@ -96,9 +97,22 @@ public class BoardController implements BoardUi {
 
     @FXML
     void resetButtonOnAction(ActionEvent event) {
-        board.initializeBoard();
-        resetBoardUI();
-        msgLabel.setText("Board Reset");
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirm Reset");
+        alert.setHeaderText(null);
+        alert.setContentText("Are you sure you want to reset the board?");
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            board.initializeBoard();
+            resetBoardUI();
+            msgLabel.setText("Board Reset");
+            isPlayerTurn = true;
+
+            xScore.setText("0");
+            oScore.setText("0");
+            roundLabel.setText("Round : 1");
+        }
     }
 
     private void resetBoardUI() {
@@ -110,6 +124,8 @@ public class BoardController implements BoardUi {
             }
         }
     }
+
+
 
     @Override
     public void update(int row, int col, boolean isHuman) {
@@ -138,8 +154,6 @@ public class BoardController implements BoardUi {
                     winner.row1+" "+winner.row2+" "+winner.row3);
             disableAllCells();
         }
-        //msgLabel.setText("Winner: " + (isPlayerTurn ? "You" : "AI"));
-        //disableAllCells();
     }
 
     public void markWinningMove(){
@@ -172,11 +186,31 @@ public class BoardController implements BoardUi {
             }
         }
 
-        //msgLabelTurn();
+        if(board.checkWinner().winningPiece == Piece.EMPTY && board.isBoardFull()){
+            System.out.println("The game is a draw.");
+            msgLabel.setText("The game is a draw.");
+            isPlayerTurn = true;
+        }
+
+        scoreCalaculate();
+
     }
 
-    public void msgLabelTurn() {
-        msgLabel.setText(isPlayerTurn ? "Your turn" : "AI's turn");
+    public void scoreCalaculate(){
+        if (winner != null) {
+            if (winner.winningPiece == Piece.X) {
+                xScore.setText(String.valueOf(Integer.parseInt(xScore.getText()) + 1));
+            } else if (winner.winningPiece == Piece.O) {
+                oScore.setText(String.valueOf(Integer.parseInt(oScore.getText()) + 1));
+            }
+        }
+    }
+
+    private void roundCalculate() {
+        String roundText = roundLabel.getText();
+        String roundNumberStr = roundText.replaceAll("[^0-9]", ""); // Remove non-numeric characters
+        int roundNumber = Integer.parseInt(roundNumberStr);
+        roundLabel.setText("Round : " + (roundNumber + 1));
     }
 
     private Button getButtonByPosition(int row, int col) {
