@@ -5,37 +5,25 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
 
-public class BoardController implements BoardUi {
+public class SimpleBoardController implements BoardUi {
 
     @FXML
     private Button cell1, cell2, cell3, cell4, cell5, cell6, cell7, cell8, cell9;
 
     @FXML
-    private AnchorPane gamePane, welcomePane;
+    private Label msgLabel;
 
-    @FXML
-    private Label msgLabel, roundLabel, oScore, xScore;
-
-    @FXML
-    private ImageView oImage, xImage;
 
     private BoardImpl board = new BoardImpl();
-    private HumanPlayer humanPlayer;
-    private AiPlayer aiPlayer;
-    private boolean isPlayerTurn;
+    private HumanPlayer humanPlayer = new HumanPlayer(board, Piece.X);
+    private AiPlayer aiPlayer = new AiPlayer(board, Piece.O);
+    private boolean isPlayerTurn = true;
     private Button[][] buttons;
     private Winner winner;
 
     @FXML
     public void initialize() {
-        welcomePane.setVisible(true);
-        gamePane.setVisible(false);
-
-        oImage.setOnMouseClicked(event -> handleImageClick("oImage"));
-        xImage.setOnMouseClicked(event -> handleImageClick("xImage"));
 
         // Initialize the buttons array here
         buttons = new Button[][]{
@@ -43,62 +31,17 @@ public class BoardController implements BoardUi {
                 {cell4, cell5, cell6},
                 {cell7, cell8, cell9}
         };
-    }
-
-    private void handleImageClick(String imageName) {
-        System.out.println("User clicked on: " + imageName);
-
-        if (imageName.equals("xImage")) {
-            humanPlayer = new HumanPlayer(board, Piece.X);
-            aiPlayer = new AiPlayer(board, Piece.O);
-            isPlayerTurn = true;
-        } else if (imageName.equals("oImage")) {
-            humanPlayer = new HumanPlayer(board, Piece.O);
-            aiPlayer = new AiPlayer(board, Piece.X);
-            isPlayerTurn = false;
-        }
-
-        welcomePane.setVisible(false);
-        gamePane.setVisible(true);
 
         board.initializeBoard();
-        board.printBoard();
     }
 
-    @FXML
-    void backButtonOnAction(ActionEvent event) {
-        // Handle back button action
-        System.out.println("Back button clicked");
-
-    }
-
-    @FXML
-    void nextButtonOnAction(ActionEvent event) {
-//        if (winner != null) {
-//            if (winner.winningPiece == Piece.X) {
-//                xScore.setText(String.valueOf(Integer.parseInt(xScore.getText()) + 1));
-//            } else if (winner.winningPiece == Piece.O) {
-//                oScore.setText(String.valueOf(Integer.parseInt(oScore.getText()) + 1));
-//            }
-//        }
-//
-//        assert winner != null;
-//        System.out.println("Winner : "+winner.winningPiece.toString());
-//
-//        board.initializeBoard();
-//        resetBoardUI();
-//        winner = null; // Reset the winner for the next round
-
-        System.out.println("Next Round button clicked");
-
-
-    }
 
     @FXML
     void resetButtonOnAction(ActionEvent event) {
         board.initializeBoard();
         resetBoardUI();
         msgLabel.setText("Board Reset");
+        isPlayerTurn = true;
     }
 
     private void resetBoardUI() {
@@ -134,12 +77,15 @@ public class BoardController implements BoardUi {
             msgLabel.setText("Winner: " + winner.winningPiece);
             markWinningMove();
             System.out.println("Winner Board\n" +
-                    winner.col1+" "+winner.col2+" "+winner.col3+"\n"+
-                    winner.row1+" "+winner.row2+" "+winner.row3);
+                    winner.col1 + " " + winner.col2 + " " + winner.col3 + "\n" +
+                    winner.row1 + " " + winner.row2 + " " + winner.row3);
             disableAllCells();
+            isPlayerTurn = true;
+        } else if (board.isBoardFull()) {
+            System.out.println("The game is a draw.");
+            msgLabel.setText("The game is a draw.");
+            isPlayerTurn = true;
         }
-        //msgLabel.setText("Winner: " + (isPlayerTurn ? "You" : "AI"));
-        //disableAllCells();
     }
 
     public void markWinningMove(){
@@ -171,12 +117,6 @@ public class BoardController implements BoardUi {
                 isPlayerTurn = true;
             }
         }
-
-        //msgLabelTurn();
-    }
-
-    public void msgLabelTurn() {
-        msgLabel.setText(isPlayerTurn ? "Your turn" : "AI's turn");
     }
 
     private Button getButtonByPosition(int row, int col) {

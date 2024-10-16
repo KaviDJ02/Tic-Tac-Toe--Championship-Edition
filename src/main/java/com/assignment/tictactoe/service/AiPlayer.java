@@ -44,13 +44,8 @@ public class AiPlayer extends Player {
                     // Compute evaluation function for this move
                     int moveVal = minimax(board, 0, false);
 
-                    System.out.println("Update move");
-                    board.printBoard();
-
                     // Undo the move
                     board.updateMove(i, j, Piece.EMPTY);
-
-                    board.printBoard();
 
                     // If the value of the current move is more than the best value, update best
                     if (moveVal > bestVal) {
@@ -67,6 +62,7 @@ public class AiPlayer extends Player {
     // Minimax algorithm to calculate the best move for the AI
     private int minimax(BoardImpl board, int depth, boolean isMaximizing) {
         Winner winner = board.checkWinner();
+
         if (winner.winningPiece == piece) return 10 - depth;
         if (winner.winningPiece == opponentPiece) return depth - 10;
         if (board.isBoardFull()) return 0;

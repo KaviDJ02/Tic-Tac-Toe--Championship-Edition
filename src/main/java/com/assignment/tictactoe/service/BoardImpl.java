@@ -42,9 +42,6 @@ public class BoardImpl implements Board{
 
         //System.out.println("Move made by: " + piece + " at row: " + row + " col: " + col);
 
-        //pieces[row][col] = piece;
-
-
     }
 
     @Override
