@@ -36,7 +36,11 @@ public class BoardImpl implements Board{
         // Update the cell with the given piece if the move is legal
         if (isLegalMove(row, col)) {
             pieces[row][col] = piece;
+        } else if (piece == Piece.EMPTY) {
+            pieces[row][col] = piece;
         }
+
+        //System.out.println("Move made by: " + piece + " at row: " + row + " col: " + col);
 
         //pieces[row][col] = piece;
 

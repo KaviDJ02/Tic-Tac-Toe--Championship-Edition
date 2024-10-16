@@ -17,6 +17,7 @@ public class Main extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("/com/assignment/tictactoe/Board.fxml"));
         primaryStage.setTitle("Tic-Tac-Toe: Championship Edition");
         primaryStage.setScene(new Scene(root));
+        primaryStage.resizableProperty().setValue(Boolean.FALSE);
         primaryStage.show();
     }
 }

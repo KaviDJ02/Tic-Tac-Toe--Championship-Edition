@@ -7,5 +7,9 @@ public abstract class Player {
         this.board = board;
     }
 
+    public Board getBoard() {
+        return board;
+    }
+
     public abstract void move(int row, int col);
 }

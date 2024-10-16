@@ -20,6 +20,8 @@ public class AiPlayer extends Player {
         int bestRow = bestMove[0];
         int bestCol = bestMove[1];
 
+        //board.printBoard();
+
         // Perform the move on the board if it's valid
         if (bestRow != -1 && bestCol != -1 && board.isLegalMove(bestRow, bestCol)) {
             board.updateMove(bestRow, bestCol, piece);
@@ -42,8 +44,13 @@ public class AiPlayer extends Player {
                     // Compute evaluation function for this move
                     int moveVal = minimax(board, 0, false);
 
+                    System.out.println("Update move");
+                    board.printBoard();
+
                     // Undo the move
                     board.updateMove(i, j, Piece.EMPTY);
+
+                    board.printBoard();
 
                     // If the value of the current move is more than the best value, update best
                     if (moveVal > bestVal) {
