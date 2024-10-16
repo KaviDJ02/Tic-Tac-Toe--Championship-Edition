@@ -52,44 +52,58 @@
 }
 
 .game-board .button:hover {
-    -fx-background-color: #757575; /* Light gray on hover */
+    -fx-background-color: #757575; /* Lighter on hover */
 }
 
-.game-board .button:pressed {
-    -fx-background-color: #9e9e9e; /* Darker shade when clicked */
+/* Labels for X, O, and Round */
+.score-label, .round-label, .xo-label {
+    -fx-font-size: 24px; /* Increase font size for better readability */
+    -fx-font-weight: bold; /* Make the labels bold */
+    -fx-text-fill: #ffffff; /* White color for better contrast */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.7), 5, 0, 3, 3); /* Shadow for depth */
 }
 
-/* Reset button styles */
+/* Label specifically for the round number */
+.round-number {
+    -fx-font-size: 28px; /* Larger font size for the round number */
+    -fx-font-weight: bold;
+    -fx-text-fill: #ffeb3b; /* Bright yellow color for emphasis */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.7), 5, 0, 3, 3); /* Shadow for depth */
+}
+
+
 .button-reset {
-    -fx-background-color: #d32f2f; /* Bright reset button to draw attention */
+    -fx-background-color: #d32f2f; /* Red for Reset */
     -fx-text-fill: white;
     -fx-font-size: 16px;
     -fx-background-radius: 8;
     -fx-cursor: hand;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.5), 5, 0, 0, 5);
-    -fx-transition: background-color 0.3s ease; /* Smooth transition for background color */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.7), 5, 0, 0, 5);
+    -fx-transition: background-color 0.3s ease;
 }
 
 .button-reset:hover {
-    -fx-background-color: #c62828;
+    -fx-background-color: #e57373; /* Lighter red on hover */
 }
 
 .button-reset:pressed {
-    -fx-background-color: #b71c1c;
+    -fx-background-color: #c62828; /* Darker red when pressed */
 }
 
-/* Enhanced title - Championship Edition */
-.label {
-    -fx-font-size: 20px;
-    -fx-text-fill: linear-gradient(to right, #ff9800, #ffc107); /* Gold gradient for the title */
-    -fx-font-weight: bold;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.7), 5, 0, 2, 2); /* Adds shadow to the text */
-    -fx-padding: 5;
+.button-next-round {
+    -fx-background-color: #388e3c; /* Green for Next Round */
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-background-radius: 8;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.7), 5, 0, 0, 5);
+    -fx-transition: background-color 0.3s ease;
 }
 
-.score-title {
-    -fx-font-size: 36px; /* Bigger for more emphasis */
-    -fx-text-fill: linear-gradient(to right, #2196f3, #03a9f4); /* Cool blue gradient for the main title */
-    -fx-font-weight: bold;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.7), 5, 0, 3, 3); /* Shadow for depth */
+.button-next-round:hover {
+    -fx-background-color: #43a047; /* Slightly lighter green on hover */
+}
+
+.button-next-round:pressed {
+    -fx-background-color: #2e7d32; /* Darker green when clicked */
 }

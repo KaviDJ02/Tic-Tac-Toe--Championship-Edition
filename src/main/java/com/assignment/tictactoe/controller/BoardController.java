@@ -11,7 +11,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 
 import java.util.Optional;
-import java.util.Random;
 
 public class BoardController implements BoardUi {
 
@@ -121,6 +120,31 @@ public class BoardController implements BoardUi {
                 button.setText("");  // Clear the text of each button
                 button.setDisable(false);  // Enable the button
                 button.setStyle("");  // Reset any custom styles
+            }
+        }
+    }
+
+    private void twoPlayerMode(int row, int col) {
+        // Handle a cell click event
+        if (board.isLegalMove(row, col)) { // Check if the move is legal
+            if (isPlayerTurn) {
+                board.updateMove(row, col, Piece.X); // Update the board with piece X
+                update(row, col, true); // Update the UI
+            } else {
+                board.updateMove(row, col, Piece.O); // Update the board with piece O
+                update(row, col, false); // Update the UI
+            }
+            isPlayerTurn = !isPlayerTurn; // Switch turns
+
+            Winner winnerInTwoPlayer = board.checkWinner(); // Check for a winner
+            if (winnerInTwoPlayer.winningPiece != Piece.EMPTY) {
+                System.out.println("Winner: " + winner); // Announce the winner
+                board.initializeBoard();
+                resetBoardUI(); // Reset the board for a new game
+            } else if (board.isBoardFull()) {
+                System.out.println("It's a draw!"); // Announce a draw
+                board.initializeBoard();
+                resetBoardUI();
             }
         }
     }

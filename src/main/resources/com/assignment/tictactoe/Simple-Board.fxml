@@ -8,14 +8,14 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="660.0" prefWidth="450.0" stylesheets="@SimpleStyle.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.assignment.tictactoe.controller.SimpleBoardController">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="702.0" prefWidth="450.0" stylesheets="@SimpleStyle.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.assignment.tictactoe.controller.SimpleBoardController">
     <children>
 
         <!-- Game Pane -->
         <AnchorPane fx:id="gamePane" prefHeight="600.0" prefWidth="450.0" styleClass="game-pane">
             <children>
-                <Label alignment="CENTER" contentDisplay="CENTER" layoutX="107.0" layoutY="27.0" prefHeight="32.0" prefWidth="234.0" styleClass="score-title" text="Tic Tac Toe" />
-                <GridPane gridLinesVisible="true" layoutX="75.0" layoutY="210.0" prefHeight="300.0" prefWidth="300.0" styleClass="game-board">
+                <Label alignment="CENTER" contentDisplay="CENTER" layoutX="107.0" layoutY="14.0" prefHeight="32.0" prefWidth="234.0" styleClass="score-title" text="Tic Tac Toe" />
+                <GridPane gridLinesVisible="true" layoutX="62.0" layoutY="252.0" prefHeight="314.0" prefWidth="314.0" styleClass="game-board">
                     <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -38,9 +38,16 @@
                         <Button fx:id="cell9" layoutX="110.0" layoutY="211.0" mnemonicParsing="false" onAction="#handleCellClick" prefHeight="100.0" prefWidth="100.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                     </children>
                 </GridPane>
-                <Label fx:id="msgLabel" alignment="CENTER" layoutX="39.0" layoutY="122.0" prefHeight="26.0" prefWidth="371.0" styleClass="message-label" text="Welcome" />
-                <Button layoutX="183.0" layoutY="563.0" onAction="#resetButtonOnAction" prefHeight="45.0" prefWidth="83.0" styleClass="button-reset" text="Reset" />
-            <Label layoutX="119.0" layoutY="63.0" text="Championship Edition" textFill="#e4e428" />
+                <Label fx:id="msgLabel" alignment="CENTER" layoutX="63.0" layoutY="183.0" prefHeight="38.0" prefWidth="324.0" styleClass="message-label" text="Welcome" />
+                <Button fx:id="ResetButton" layoutX="266.0" layoutY="593.0" onAction="#resetButtonOnAction" prefHeight="45.0" prefWidth="83.0" styleClass="button-reset" text="Reset" />
+                <Label layoutX="161.0" layoutY="48.0" text="Championship Edition" textFill="#e4e428" />
+                <Button fx:id="nextRoundButton" layoutX="98.0" layoutY="593.0" onAction="#nextButtonOnAction" prefHeight="46.0" prefWidth="138.0" styleClass="button-next-round" text="Next Round" />
+                <Label layoutX="54.0" layoutY="108.0" styleClass="xo-label" text="X" fx:id="xLabel" />
+                <Label fx:id="oLabel" layoutX="378.0" layoutY="108.0" styleClass="xo-label" text="O" />
+                <Label fx:id="roundTextLabel" layoutX="188.0" layoutY="91.0" styleClass="score-label" text="Round" />
+                <Label fx:id="roundLabel" alignment="CENTER" layoutX="198.0" layoutY="123.0" prefHeight="34.0" prefWidth="54.0" styleClass="round-number" text="1" />
+                <Label layoutX="87.0" layoutY="106.0" style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #ffffff;" text="0" fx:id="xScore" />
+                <Label fx:id="oScore" layoutX="349.0" layoutY="106.0" style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #ffffff;" text="0" />
             </children>
         </AnchorPane>
     </children>
