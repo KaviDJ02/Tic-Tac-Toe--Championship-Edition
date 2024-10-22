@@ -2,62 +2,20 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
 
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="660.0" prefWidth="450.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.assignment.tictactoe.controller.BoardController">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="702.0" prefWidth="450.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.assignment.tictactoe.controller.BoardController">
     <children>
-        <!-- Welcome Pane -->
-        <AnchorPane fx:id="welcomePane" prefHeight="660.0" prefWidth="450.0" styleClass="welcome-pane">
-            <children>
-                <ImageView fitHeight="660.0" fitWidth="450.0" opacity="0.4" preserveRatio="true">
-                    <image>
-                        <Image url="@images/bacgroundimg.png" />
-                    </image>
-                </ImageView>
-                <Label layoutX="143.0" layoutY="30.0" styleClass="title-label" text="Tic Tac Toe" />
-                <Label layoutX="137.0" layoutY="62.0" styleClass="sub-title-label" text="Championship Edition" />
-                <ImageView fitHeight="526.0" fitWidth="430.0" layoutX="10.0" layoutY="151.0" preserveRatio="true">
-                    <image>
-                        <Image url="@images/img.png" />
-                    </image>
-                </ImageView>
-                <ImageView fitHeight="125.0" fitWidth="125.0" layoutX="73.0" layoutY="322.0" preserveRatio="true" fx:id="xImage">
-                    <image>
-                        <Image url="@images/x.png" />
-                    </image>
-                </ImageView>
-                <ImageView fx:id="oImage" fitHeight="125.0" fitWidth="125.0" layoutX="248.0" layoutY="322.0" preserveRatio="true">
-                    <image>
-                        <Image url="@images/o.png" />
-                    </image>
-                </ImageView>
-                <Label layoutX="179.0" layoutY="162.0" styleClass="choose-label" text="Choose one" />
-            </children>
-        </AnchorPane>
 
         <!-- Game Pane -->
-        <AnchorPane fx:id="gamePane" prefHeight="600.0" prefWidth="450.0" styleClass="game-pane">
+        <AnchorPane prefHeight="600.0" prefWidth="450.0" styleClass="game-pane">
             <children>
-                <ImageView fitHeight="67.0" fitWidth="68.0" layoutX="32.0" layoutY="72.0" preserveRatio="true">
-                    <image>
-                        <Image url="@images/x.png" />
-                    </image>
-                </ImageView>
-                <ImageView fitHeight="67.0" fitWidth="68.0" layoutX="348.0" layoutY="72.0" preserveRatio="true">
-                    <image>
-                        <Image url="@images/o.png" />
-                    </image>
-                </ImageView>
-                <Label fx:id="roundLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="107.0" layoutY="14.0" prefHeight="32.0" prefWidth="234.0" styleClass="score-title" text="Round : 1" />
-                <Label layoutX="114.0" layoutY="72.0" styleClass="score-label" text="0" fx:id="xScore" />
-                <Label fx:id="oScore" layoutX="302.0" layoutY="72.0" styleClass="score-label" text="0" />
-                <GridPane gridLinesVisible="true" layoutX="75.0" layoutY="210.0" prefHeight="300.0" prefWidth="300.0" styleClass="game-board">
+                <Label alignment="CENTER" contentDisplay="CENTER" layoutX="107.0" layoutY="14.0" prefHeight="32.0" prefWidth="234.0" styleClass="score-title" text="Tic Tac Toe" />
+                <GridPane gridLinesVisible="true" layoutX="62.0" layoutY="252.0" prefHeight="314.0" prefWidth="314.0" styleClass="game-board">
                     <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -69,21 +27,27 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                     <children>
-                        <Button fx:id="cell1" mnemonicParsing="false" prefHeight="100.0" prefWidth="100.0" onAction="#handleCellClick" />
-                        <Button fx:id="cell3" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="100.0" GridPane.columnIndex="2" onAction="#handleCellClick" />
-                        <Button fx:id="cell2" layoutX="110.0" layoutY="10.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="100.0" GridPane.columnIndex="1" onAction="#handleCellClick" />
-                        <Button fx:id="cell6" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="100.0" GridPane.columnIndex="2" GridPane.rowIndex="1" onAction="#handleCellClick" />
-                        <Button fx:id="cell5" layoutX="210.0" layoutY="10.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1" onAction="#handleCellClick" />
-                        <Button fx:id="cell4" layoutX="110.0" layoutY="10.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="100.0" GridPane.rowIndex="1" onAction="#handleCellClick" />
-                        <Button fx:id="cell7" layoutX="10.0" layoutY="111.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="100.0" GridPane.rowIndex="2" onAction="#handleCellClick" />
-                        <Button fx:id="cell8" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="2" onAction="#handleCellClick" />
-                        <Button fx:id="cell9" layoutX="110.0" layoutY="211.0" mnemonicParsing="false" prefHeight="100.0" prefWidth="100.0" GridPane.columnIndex="2" GridPane.rowIndex="2" onAction="#handleCellClick" />
+                        <Button fx:id="cell1" mnemonicParsing="false" onAction="#handleCellClick" prefHeight="100.0" prefWidth="100.0" />
+                        <Button fx:id="cell3" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleCellClick" prefHeight="100.0" prefWidth="100.0" GridPane.columnIndex="2" />
+                        <Button fx:id="cell2" layoutX="110.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleCellClick" prefHeight="100.0" prefWidth="100.0" GridPane.columnIndex="1" />
+                        <Button fx:id="cell6" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleCellClick" prefHeight="100.0" prefWidth="100.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                        <Button fx:id="cell5" layoutX="210.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleCellClick" prefHeight="100.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Button fx:id="cell4" layoutX="110.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleCellClick" prefHeight="100.0" prefWidth="100.0" GridPane.rowIndex="1" />
+                        <Button fx:id="cell7" layoutX="10.0" layoutY="111.0" mnemonicParsing="false" onAction="#handleCellClick" prefHeight="100.0" prefWidth="100.0" GridPane.rowIndex="2" />
+                        <Button fx:id="cell8" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleCellClick" prefHeight="100.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Button fx:id="cell9" layoutX="110.0" layoutY="211.0" mnemonicParsing="false" onAction="#handleCellClick" prefHeight="100.0" prefWidth="100.0" GridPane.columnIndex="2" GridPane.rowIndex="2" />
                     </children>
                 </GridPane>
-                <Label fx:id="msgLabel" alignment="CENTER" layoutX="39.0" layoutY="160.0" prefHeight="26.0" prefWidth="371.0" styleClass="message-label" text="Welcome" />
-                <Button layoutX="313.0" layoutY="561.0" onAction="#resetButtonOnAction" prefHeight="45.0" prefWidth="83.0" styleClass="button-reset" text="Reset" />
-                <Button layoutX="53.0" layoutY="561.0" onAction="#backButtonOnAction" prefHeight="45.0" prefWidth="83.0" styleClass="button-back" text="Back" />
-                <Button layoutX="159.0" layoutY="561.0" onAction="#nextButtonOnAction" prefHeight="46.0" prefWidth="132.0" styleClass="button-back" text="Next Round" />
+                <Label fx:id="msgLabel" alignment="CENTER" layoutX="63.0" layoutY="183.0" prefHeight="38.0" prefWidth="324.0" styleClass="message-label" text="Welcome" />
+                <Button fx:id="ResetButton" layoutX="266.0" layoutY="593.0" onAction="#resetButtonOnAction" prefHeight="45.0" prefWidth="83.0" styleClass="button-reset" text="Reset" />
+                <Label layoutX="161.0" layoutY="48.0" text="Championship Edition" textFill="#e4e428" />
+                <Button fx:id="nextRoundButton" layoutX="98.0" layoutY="593.0" onAction="#nextButtonOnAction" prefHeight="46.0" prefWidth="138.0" styleClass="button-next-round" text="Next Round" />
+                <Label layoutX="54.0" layoutY="108.0" styleClass="xo-label" text="X" fx:id="xLabel" />
+                <Label fx:id="oLabel" layoutX="378.0" layoutY="108.0" styleClass="xo-label" text="O" />
+                <Label fx:id="roundTextLabel" layoutX="188.0" layoutY="91.0" styleClass="score-label" text="Round" />
+                <Label fx:id="roundLabel" alignment="CENTER" layoutX="198.0" layoutY="123.0" prefHeight="34.0" prefWidth="54.0" styleClass="round-number" text="1" />
+                <Label layoutX="87.0" layoutY="106.0" style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #ffffff;" text="0" fx:id="xScore" />
+                <Label fx:id="oScore" layoutX="349.0" layoutY="106.0" style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #ffffff;" text="0" />
             </children>
         </AnchorPane>
     </children>

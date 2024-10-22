@@ -3,12 +3,7 @@ package com.assignment.tictactoe.controller;
 import com.assignment.tictactoe.service.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Label;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.control.*;
 
 import java.util.Optional;
 
@@ -18,66 +13,29 @@ public class BoardController implements BoardUi {
     private Button cell1, cell2, cell3, cell4, cell5, cell6, cell7, cell8, cell9;
 
     @FXML
-    private AnchorPane gamePane, welcomePane;
-
-    @FXML
     private Label msgLabel, roundLabel, oScore, xScore;
 
     @FXML
-    private ImageView oImage, xImage;
+    private Button nextRoundButton;
 
     private BoardImpl board = new BoardImpl();
-    private HumanPlayer humanPlayer;
-    private AiPlayer aiPlayer;
-    private boolean isPlayerTurn;
+    private HumanPlayer humanPlayer = new HumanPlayer(board, Piece.X);
+    private AiPlayer aiPlayer = new AiPlayer(board, Piece.O);
+    private boolean isPlayerTurn = true;
     private Button[][] buttons;
     private Winner winner;
 
     @FXML
     public void initialize() {
-        welcomePane.setVisible(true);
-        gamePane.setVisible(false);
-
-        oImage.setOnMouseClicked(event -> handleImageClick("oImage"));
-        xImage.setOnMouseClicked(event -> handleImageClick("xImage"));
-
         // Initialize the buttons array here
         buttons = new Button[][]{
                 {cell1, cell2, cell3},
                 {cell4, cell5, cell6},
                 {cell7, cell8, cell9}
         };
-    }
-
-    private void handleImageClick(String imageName) {
-        System.out.println("User clicked on: " + imageName);
-
-        if (imageName.equals("xImage")) {
-            humanPlayer = new HumanPlayer(board, Piece.X);
-            aiPlayer = new AiPlayer(board, Piece.O);
-            isPlayerTurn = true;
-        } else if (imageName.equals("oImage")) {
-            humanPlayer = new HumanPlayer(board, Piece.O);
-            aiPlayer = new AiPlayer(board, Piece.X);
-            isPlayerTurn = false;
-        }
-
-        welcomePane.setVisible(false);
-        gamePane.setVisible(true);
 
         board.initializeBoard();
-
-        board.printBoard();
-    }
-
-    @FXML
-    void backButtonOnAction(ActionEvent event) {
-        // Handle back button action
-        welcomePane.setVisible(true);
-        gamePane.setVisible(false);
-        resetBoardUI();
-        System.out.println("Back button clicked");
-
+        nextRoundButton.setDisable(true); // Disable the next round button at the start
     }
 
     @FXML
@@ -87,11 +45,7 @@ public class BoardController implements BoardUi {
         roundCalculate();
         isPlayerTurn = true;
         msgLabel.setText("New Round");
-
-
-        System.out.println("Next Round button clicked");
-
-
+        nextRoundButton.setDisable(true); // Disable the next round button after it has been clicked
     }
 
     @FXML
@@ -99,7 +53,12 @@ public class BoardController implements BoardUi {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirm Reset");
         alert.setHeaderText(null);
-        alert.setContentText("Are you sure you want to reset the board?");
+        alert.setContentText("Are you sure you want to reset the game?");
+
+        // Load the stylesheet and apply it to the alert
+        DialogPane dialogPane = alert.getDialogPane();
+        dialogPane.getStylesheets().add(getClass().getResource("/com/assignment/tictactoe/style.css").toExternalForm());
+        dialogPane.getStyleClass().add("alert");  // Make sure to match this class in the CSS
 
         Optional<ButtonType> result = alert.showAndWait();
         if (result.isPresent() && result.get() == ButtonType.OK) {
@@ -110,7 +69,7 @@ public class BoardController implements BoardUi {
 
             xScore.setText("0");
             oScore.setText("0");
-            roundLabel.setText("Round : 1");
+            roundLabel.setText("1");
         }
     }
 
@@ -123,33 +82,6 @@ public class BoardController implements BoardUi {
             }
         }
     }
-
-    private void twoPlayerMode(int row, int col) {
-        // Handle a cell click event
-        if (board.isLegalMove(row, col)) { // Check if the move is legal
-            if (isPlayerTurn) {
-                board.updateMove(row, col, Piece.X); // Update the board with piece X
-                update(row, col, true); // Update the UI
-            } else {
-                board.updateMove(row, col, Piece.O); // Update the board with piece O
-                update(row, col, false); // Update the UI
-            }
-            isPlayerTurn = !isPlayerTurn; // Switch turns
-
-            Winner winnerInTwoPlayer = board.checkWinner(); // Check for a winner
-            if (winnerInTwoPlayer.winningPiece != Piece.EMPTY) {
-                System.out.println("Winner: " + winner); // Announce the winner
-                board.initializeBoard();
-                resetBoardUI(); // Reset the board for a new game
-            } else if (board.isBoardFull()) {
-                System.out.println("It's a draw!"); // Announce a draw
-                board.initializeBoard();
-                resetBoardUI();
-            }
-        }
-    }
-
-
 
     @Override
     public void update(int row, int col, boolean isHuman) {
@@ -177,6 +109,10 @@ public class BoardController implements BoardUi {
                     winner.col1+" "+winner.col2+" "+winner.col3+"\n"+
                     winner.row1+" "+winner.row2+" "+winner.row3);
             disableAllCells();
+            nextRoundButton.setDisable(false); // Enable the next round button when the game is finished
+
+            board.printBoard();
+
         }
     }
 
@@ -214,6 +150,8 @@ public class BoardController implements BoardUi {
             System.out.println("The game is a draw.");
             msgLabel.setText("The game is a draw.");
             isPlayerTurn = true;
+            nextRoundButton.setDisable(false); // Enable the next round button when the game is finished
+
         }
 
         scoreCalaculate();
@@ -231,10 +169,7 @@ public class BoardController implements BoardUi {
     }
 
     private void roundCalculate() {
-        String roundText = roundLabel.getText();
-        String roundNumberStr = roundText.replaceAll("[^0-9]", ""); // Remove non-numeric characters
-        int roundNumber = Integer.parseInt(roundNumberStr);
-        roundLabel.setText("Round : " + (roundNumber + 1));
+        roundLabel.setText(String.valueOf(Integer.parseInt(roundLabel.getText())+1));
     }
 
     private Button getButtonByPosition(int row, int col) {

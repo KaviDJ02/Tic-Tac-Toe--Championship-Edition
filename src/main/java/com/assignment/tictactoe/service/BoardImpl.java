@@ -94,15 +94,4 @@ public class BoardImpl implements Board{
         return true; // No empty cells found, board is full
     }
 
-    public boolean isBoardEmpty() {
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                if (!isLegalMove(i, j)) {
-                    return false; // Found a non-empty cell, board is not empty
-                }
-            }
-        }
-        return true; // No non-empty cells found, board is empty
-    }
-
 }
